@@ -1,0 +1,47 @@
+http:
+  routers:
+    http-catchall:
+      rule: "HostRegexp(`{host:.+}`)"
+      entrypoints:
+        - web
+      middlewares:
+        - redirect-to-https
+        - security-headers
+
+    https-catchall:
+      rule: "HostRegexp(`{host:.+}`)"
+      entrypoints:
+        - websecure
+      middlewares:
+        - custom-redirect
+        - security-headers
+
+    dashboard:
+      service: api@internal
+      tls:
+        certresolver: letsencrypt
+      entrypoints:
+        - websecure
+      middlewares:
+        - security-headers
+        - dashboard-auth
+
+    # rt-prometheus:
+    #   entryPoints:
+    #   - websecure
+    #   middlewares:
+    #   - authentification
+    #   service: sc-prometheus
+    #   rule: Host (`prometheus.czs.local`)
+    #   tls:
+    #     certResolver: letsencrypt
+
+    # rt-grafana:
+    #   entryPoints:
+    #   - websecure
+    #   middlewares:
+    #   - security
+    #   service: sc-grafana
+    #   rule: Host (`grafana.czs.local`)
+    #   tls:
+    #     certResolver: letsencrypt
