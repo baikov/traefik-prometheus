@@ -52,12 +52,12 @@ certificatesResolvers:
       # caServer: "https://acme-v02.api.letsencrypt.org/directory"  # Used by default
       tlsChallenge: true
       keyType: EC256  # Allow value 'EC256', 'EC384', 'RSA2048', 'RSA4096', 'RSA8192'
-      httpChallenge:
-        entryPoint: web
+      # httpChallenge:
+      #   entryPoint: web
 
 log:
   filePath: "/var/log/traefik/applog.log"
-  format: json
+  # format: json
   level: INFO
 
 accessLog:
