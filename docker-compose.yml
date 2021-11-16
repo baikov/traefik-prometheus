@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  traefik:
+    build:
+      context: ./traefik
+    container_name: traefik
+    security_opt:
+      - no-new-privileges:true
+    command:
+        - --certificatesresolvers.letsencrypt.acme.email=${EMAIL}
+        # - --pilot.token=${PILOT_TOKEN}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_data:/etc/traefik/acme:z
+      - ./traefik/log:/var/log/traefik
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/dynamic:/etc/traefik/dynamic:ro
+      - /etc/localtime:/etc/localtime:ro
+    env_file: .env
+
+    labels:
+      # Secure Dashboard (http basic auth)
+      - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_DASHBOARD}.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
+      # Dashboard auth
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_LOG_PSW}"
+      # - "traefik.enable=true"
+      # - "traefik.docker.network=front"
+      # - "traefik.port=8080"
+      # - "traefik.backend=traefik"
+
+    restart: unless-stopped
+
+volumes:
+  traefik_data: {}
+  prometheus_data: {}
+  grafana_data: {}
+
+networks:
+  front:
+    name: front
+  back:
+    name: back
