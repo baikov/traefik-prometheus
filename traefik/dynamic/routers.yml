@@ -24,7 +24,7 @@ http:
         - websecure
       middlewares:
         - security-headers
-        - dashboard-auth
+        - dashboard-auth@docker
 
     # rt-prometheus:
     #   entryPoints:
