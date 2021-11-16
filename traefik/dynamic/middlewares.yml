@@ -10,7 +10,6 @@ http:
         browserXssFilter: true
         contentTypeNosniff: true
         frameDeny: true
-        sslRedirect: true
         hostsProxyHeaders:
           - "X-CSRFToken"
           - "X-Forwarded-Host"
@@ -18,6 +17,7 @@ http:
         stsPreload: true
         stsSeconds: 31536000  # 315360000
         forceSTSHeader: true
+        # PermissionsPolicy: "camera 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none'; vibrate 'self';"
 
         accessControlAllowMethods:
           - GET
@@ -25,10 +25,8 @@ http:
           - PUT
         accessControlMaxAge: 100
         addVaryHeader: true
-        sslForceHost: true
         customFrameOptionsValue: SAMEORIGIN
         referrerPolicy: "same-origin"
-        featurePolicy: "camera 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none'; vibrate 'self';"
 
     custom-redirect:  # Redirect from www to non-www and http to https
       redirectregex:

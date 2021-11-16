@@ -1,29 +1,29 @@
 http:
   routers:
-    # http-catchall:
-    #   rule: "HostRegexp(`{host:.+}`)"
-    #   entrypoints:
-    #     - web
-    #   middlewares:
-    #     - redirect-to-https
-    #     - security-headers
+    http-catchall:
+      rule: "HostRegexp(`{host:.+}`)"
+      entrypoints:
+        - web
+      middlewares:
+        - redirect-to-https
+        - security-headers
 
-    # https-catchall:
-    #   rule: "HostRegexp(`{host:.+}`)"
-    #   entrypoints:
-    #     - websecure
-    #   middlewares:
-    #     - custom-redirect
-    #     - security-headers
-
-    dashboard:
-      service: api@internal
-      tls:
-        certresolver: letsencrypt
+    https-catchall:
+      rule: "HostRegexp(`{host:.+}`)"
       entrypoints:
         - websecure
       middlewares:
+        - custom-redirect
         - security-headers
+
+    # dashboard:
+    #   service: api@internal
+    #   tls:
+    #     certresolver: letsencrypt
+    #   entrypoints:
+    #     - websecure
+    #   middlewares:
+    #     - security-headers
 
     # rt-prometheus:
     #   entryPoints:
