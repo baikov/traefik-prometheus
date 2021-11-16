@@ -17,7 +17,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - traefik_data:/etc/traefik/acme:z
       - ./traefik/log:/var/log/traefik
-      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./traefik/traefik.yml:/etc/traefik/traefik.yml:ro
       - ./traefik/dynamic:/etc/traefik/dynamic:ro
       - /etc/localtime:/etc/localtime:ro
     env_file: .env
