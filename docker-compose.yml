@@ -49,6 +49,8 @@ services:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - ./prometheus/rules.yml:/etc/prometheus/rules.yml
       # - /etc/localtime:/etc/localtime:ro
+    networks:
+      - front
 
 volumes:
   traefik_data: {}
