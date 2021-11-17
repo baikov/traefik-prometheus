@@ -41,6 +41,7 @@ services:
 
   prometheus:
     image: prom/prometheus:${PROMETHEUS_VERSION}
+    container_name: prometheus
     restart: unless-stopped
     volumes:
       - ./prometheus:/etc/prometheus
@@ -71,6 +72,7 @@ services:
 
   nodeexporter:
     image: prom/node-exporter
+    container_name: node-exporter
     restart: unless-stopped
     volumes:
       - /:/rootfs:ro
@@ -88,6 +90,7 @@ services:
 
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
     restart: unless-stopped
     volumes:
       - /:/rootfs:ro
@@ -101,6 +104,7 @@ services:
 
   grafana:
     image: grafana/grafana:${GF_VERSION}
+    container_name: grafana
     restart: unless-stopped
     depends_on:
       - prometheus
