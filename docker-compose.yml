@@ -56,12 +56,12 @@ services:
       - "traefik.enable=true"
       # - "traefik.docker.network=front"
       - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS}.${DOMAIN}`)"
-      - "traefik.http.routers.rt-prometheus.service=sc-prometheus@file"
+      - "traefik.http.routers.rt-prometheus.service=sc-prometheus"
       - "traefik.http.routers.rt-prometheus.tls.certresolver=letsencrypt"
       - "traefik.http.routers.rt-prometheus.entrypoints=websecure"
       - "traefik.http.routers.rt-prometheus.middlewares=security-headers@file"
       - "traefik.http.routers.rt-prometheus.tls=true"
-      - "traefik.http.services.rt-prometheus.loadbalancer.server.port=9090"
+      - "traefik.http.services.sc-prometheus.loadbalancer.server.port=9090"
     networks:
       - front
       - back
