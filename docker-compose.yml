@@ -46,9 +46,15 @@ services:
     image: prom/prometheus
     restart: unless-stopped
     volumes:
-      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus:/etc/prometheus
       - ./prometheus/rules.yml:/etc/prometheus/rules.yml
+      - prometheus_data:/prometheus
       # - /etc/localtime:/etc/localtime:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
     networks:
       - front
       - back
@@ -88,9 +94,6 @@ services:
     restart: unless-stopped
     depends_on:
       - prometheus
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-      - GF_USERS_ALLOW_SIGN_UP=false
     volumes:
       - ./grafana/provisioning.yml:/etc/grafana/provisioning/datasources/all.yml
       - /etc/localtime:/etc/localtime:ro
