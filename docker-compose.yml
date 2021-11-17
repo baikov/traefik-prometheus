@@ -70,6 +70,14 @@ services:
     networks:
       - front
 
+  prometheus:
+    image: prom/prometheus
+    restart: unless-stopped
+    volumes:
+      - ./conf/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./conf/prometheus/rules.yml:/etc/prometheus/rules.yml
+      # - /etc/localtime:/etc/localtime:ro
+
 volumes:
   traefik_data: {}
   prometheus_data: {}

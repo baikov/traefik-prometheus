@@ -1,5 +1,5 @@
-# http:
-#   routers:
+http:
+  routers:
 #     http-catchall:
 #       rule: "HostRegexp(`{host:.+}`)"
 #       entrypoints:
@@ -25,15 +25,15 @@
     #   middlewares:
     #     - security-headers
 
-    # rt-prometheus:
-    #   entryPoints:
-    #   - websecure
-    #   middlewares:
-    #   - authentification
-    #   service: sc-prometheus
-    #   rule: Host (`prometheus.czs.local`)
-    #   tls:
-    #     certResolver: letsencrypt
+    rt-prometheus:
+      entryPoints:
+      - websecure
+      # middlewares:
+      # - authentification
+      service: sc-prometheus
+      rule: Host (`scansite.ru`)
+      tls:
+        certResolver: letsencrypt
 
     # rt-grafana:
     #   entryPoints:
