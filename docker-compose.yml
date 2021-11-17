@@ -25,9 +25,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=front"
-      # - "traefik.port=8080"
-      # - "traefik.backend=traefik"
-
       # Secure Dashboard (http basic auth)
       - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_DASHBOARD}.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
@@ -49,12 +46,20 @@ services:
       - ./prometheus:/etc/prometheus
       - ./prometheus/rules.yml:/etc/prometheus/rules.yml
       - prometheus_data:/prometheus
-      # - /etc/localtime:/etc/localtime:ro
+      - /etc/localtime:/etc/localtime:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
+    labels:
+      - "traefik.enable=true"
+      # - "traefik.docker.network=front"
+      - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS}.${DOMAIN}`)"
+      - "traefik.http.routers.rt-prometheus.service=sc-prometheus@file"
+      - "traefik.http.routers.rt-prometheus.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.rt-prometheus.entrypoints=websecure"
+      - "traefik.http.routers.rt-prometheus.middlewares=security-headers@file"
     networks:
       - front
       - back
@@ -98,6 +103,14 @@ services:
       - ./grafana/provisioning/:/etc/grafana/provisioning/
       - /etc/localtime:/etc/localtime:ro
       - grafana_data:/var/lib/grafana
+    labels:
+      - "traefik.enable=true"
+      # - "traefik.docker.network=front"
+      - "traefik.http.routers.rt-grafana.rule=Host(`${GRAFANA}.${DOMAIN}`)"
+      - "traefik.http.routers.rt-grafana.service=sc-grafana@file"
+      - "traefik.http.routers.rt-grafana.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.rt-grafana.entrypoints=websecure"
+      - "traefik.http.routers.rt-grafana.middlewares=security-headers@file"
     env_file:
       - .env
     networks:

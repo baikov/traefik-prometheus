@@ -1,21 +1,5 @@
-http:
-  routers:
-#     http-catchall:
-#       rule: "HostRegexp(`{host:.+}`)"
-#       entrypoints:
-#         - web
-#       middlewares:
-#         - redirect-to-https
-#         - security-headers
-
-#     https-catchall:
-#       rule: "HostRegexp(`{host:.+}`)"
-#       entrypoints:
-#         - websecure
-#       middlewares:
-#         - custom-redirect
-#         - security-headers
-
+# http:
+#   routers:
     # dashboard:
     #   service: api@internal
     #   tls:
@@ -25,22 +9,22 @@ http:
     #   middlewares:
     #     - security-headers
 
-    rt-prometheus:
-      entryPoints:
-      - websecure
-      # middlewares:
-      # - authentification
-      service: sc-prometheus
-      rule: Host (`prom.scansite.ru`)
-      tls:
-        certResolver: letsencrypt
+    # rt-prometheus:
+    #   entryPoints:
+    #   - websecure
+    #   # middlewares:
+    #   # - authentification
+    #   service: sc-prometheus
+    #   rule: Host (`prom.scansite.ru`)
+    #   tls:
+    #     certResolver: letsencrypt
 
-    rt-grafana:
-      entryPoints:
-      - websecure
-      # middlewares:
-      # - security
-      service: sc-grafana
-      rule: Host (`gr.scansite.ru`)
-      tls:
-        certResolver: letsencrypt
+    # rt-grafana:
+    #   entryPoints:
+    #   - websecure
+    #   # middlewares:
+    #   # - security
+    #   service: sc-grafana
+    #   rule: Host (`gr.scansite.ru`)
+    #   tls:
+    #     certResolver: letsencrypt
