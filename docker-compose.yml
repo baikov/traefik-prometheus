@@ -74,8 +74,8 @@ services:
     image: prom/prometheus
     restart: unless-stopped
     volumes:
-      - ./conf/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./conf/prometheus/rules.yml:/etc/prometheus/rules.yml
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules.yml:/etc/prometheus/rules.yml
       # - /etc/localtime:/etc/localtime:ro
 
 volumes:
