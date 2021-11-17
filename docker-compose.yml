@@ -95,9 +95,11 @@ services:
     depends_on:
       - prometheus
     volumes:
-      - ./grafana/provisioning.yml:/etc/grafana/provisioning/datasources/all.yml
+      - ./grafana/provisioning/:/etc/grafana/provisioning/
       - /etc/localtime:/etc/localtime:ro
       - grafana_data:/var/lib/grafana
+    env_file:
+      - .env
     networks:
       - front
       - back
