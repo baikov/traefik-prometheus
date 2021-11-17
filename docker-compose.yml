@@ -40,7 +40,7 @@ services:
       - front
 
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:${PROMETHEUS_VERSION}
     restart: unless-stopped
     volumes:
       - ./prometheus:/etc/prometheus
@@ -55,13 +55,13 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=front"
-      - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS}.${DOMAIN}`)"
+      - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS_SUBDOMAIN}.${DOMAIN}`)"
       - "traefik.http.routers.rt-prometheus.service=sc-prometheus"
       - "traefik.http.routers.rt-prometheus.tls=true"
       - "traefik.http.routers.rt-prometheus.tls.certresolver=letsencrypt"
       - "traefik.http.routers.rt-prometheus.tls.options=default"
       - "traefik.http.routers.rt-prometheus.entrypoints=websecure"
-      - "traefik.http.routers.rt-prometheus.middlewares=security-headers@file"
+      - "traefik.http.routers.rt-prometheus.middlewares=security-headers@file,dashboard-auth"
       - "traefik.http.services.sc-prometheus.loadbalancer.server.port=9090"
     expose:
       - 9090
@@ -100,7 +100,7 @@ services:
       - back
 
   grafana:
-    image: grafana/grafana
+    image: grafana/grafana:${GF_VERSION}
     restart: unless-stopped
     depends_on:
       - prometheus
@@ -111,7 +111,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=front"
-      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA}.${DOMAIN}`)"
+      - "traefik.http.routers.grafana.rule=Host(`${GF_SUBDOMAIN}.${DOMAIN}`)"
       - "traefik.http.routers.grafana.service=grafana"
       - "traefik.http.routers.grafana.tls=true"
       - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
