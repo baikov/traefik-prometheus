@@ -1,32 +1,32 @@
-# http:
-#   middlewares:
-#     compression: # gzip
-#       compress: {}
-#         # excludedContentTypes:
-#         #   - text/event-stream
+http:
+  middlewares:
+    compression: # gzip
+      compress: {}
+        # excludedContentTypes:
+        #   - text/event-stream
 
-#     security-headers:
-#       headers:
-#         browserXssFilter: true
-#         contentTypeNosniff: true
-#         frameDeny: true
-#         hostsProxyHeaders:
-#           - "X-CSRFToken"
-#           - "X-Forwarded-Host"
-#         stsIncludeSubdomains: true
-#         stsPreload: true
-#         stsSeconds: 31536000  # 315360000
-#         forceSTSHeader: true
-#         # PermissionsPolicy: "camera 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none'; vibrate 'self';"
+    security-headers:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        hostsProxyHeaders:
+          - "X-CSRFToken"
+          - "X-Forwarded-Host"
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000  # 315360000
+        forceSTSHeader: true
+        # PermissionsPolicy: "camera 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none'; vibrate 'self';"
 
-#         accessControlAllowMethods:
-#           - GET
-#           - OPTIONS
-#           - PUT
-#         accessControlMaxAge: 100
-#         addVaryHeader: true
-#         customFrameOptionsValue: SAMEORIGIN
-#         referrerPolicy: "same-origin"
+        accessControlAllowMethods:
+          - GET
+          - OPTIONS
+          - PUT
+        accessControlMaxAge: 100
+        addVaryHeader: true
+        customFrameOptionsValue: SAMEORIGIN
+        referrerPolicy: "same-origin"
 
 #     custom-redirect:  # Redirect from www to non-www and http to https
 #       redirectregex:

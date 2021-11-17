@@ -31,18 +31,18 @@ services:
       # Rules and middlewares asociation with entrypoints
       - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https,security-headers"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https,security-headers@file"
       - "traefik.http.routers.https-catchall.rule=hostregexp(`{host:.+}`)"
       - "traefik.http.routers.https-catchall.entrypoints=websecure"
-      - "traefik.http.routers.https-catchall.middlewares=security-headers"
-      - "traefik.http.routers.https-catchall.middlewares=custom-redirect,security-headers"
+      # - "traefik.http.routers.https-catchall.middlewares=security-headers"
+      - "traefik.http.routers.https-catchall.middlewares=custom-redirect,security-headers@file"
 
       # Secure Dashboard (http basic auth)
       - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_DASHBOARD}.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
-      - "traefik.http.routers.dashboard.middlewares=security-headers,dashboard-auth"
+      - "traefik.http.routers.dashboard.middlewares=security-headers@file,dashboard-auth"
       # Dashboard auth
       - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_LOG_PSW}"
       # Redirect from www to non-www and http to https
@@ -52,17 +52,17 @@ services:
       # Redirect 301 to https Middleware
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
-      # Security headers middleware
-      - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
-      - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
-      - "traefik.http.middlewares.security-headers.headers.frameDeny=true"
-      - "traefik.http.middlewares.security-headers.headers.sslRedirect=true"
-      - "traefik.http.middlewares.security-headers.headers.hostsProxyHeaders=['X-CSRFToken']"
-      #HSTS Configuration
-      - "traefik.http.middlewares.security-headers.headers.stsIncludeSubdomains=true"
-      - "traefik.http.middlewares.security-headers.headers.stsPreload=true"
-      - "traefik.http.middlewares.security-headers.headers.stsSeconds=31536000"
-      - "traefik.http.middlewares.security-headers.headers.forceSTSHeader=true"
+      # # Security headers middleware
+      # - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
+      # - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
+      # - "traefik.http.middlewares.security-headers.headers.frameDeny=true"
+      # - "traefik.http.middlewares.security-headers.headers.sslRedirect=true"
+      # - "traefik.http.middlewares.security-headers.headers.hostsProxyHeaders=['X-CSRFToken']"
+      # #HSTS Configuration
+      # - "traefik.http.middlewares.security-headers.headers.stsIncludeSubdomains=true"
+      # - "traefik.http.middlewares.security-headers.headers.stsPreload=true"
+      # - "traefik.http.middlewares.security-headers.headers.stsSeconds=31536000"
+      # - "traefik.http.middlewares.security-headers.headers.forceSTSHeader=true"
       # gzip compression
       # - "traefik.http.middlewares.gzip.compress=true"
 
