@@ -54,7 +54,7 @@ services:
       - '--web.console.templates=/usr/share/prometheus/consoles'
     labels:
       - "traefik.enable=true"
-      # - "traefik.docker.network=front"
+      - "traefik.docker.network=front"
       - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS}.${DOMAIN}`)"
       - "traefik.http.routers.rt-prometheus.service=sc-prometheus"
       - "traefik.http.routers.rt-prometheus.tls=true"
@@ -64,7 +64,7 @@ services:
       - "traefik.http.routers.rt-prometheus.middlewares=security-headers@file"
       - "traefik.http.services.sc-prometheus.loadbalancer.server.port=9090"
     expose:
-      - "9090"
+      - 9090
     networks:
       - front
       - back
