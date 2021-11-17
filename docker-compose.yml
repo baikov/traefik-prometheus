@@ -55,14 +55,14 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=front"
-      - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS_SUBDOMAIN}.${DOMAIN}`)"
-      - "traefik.http.routers.rt-prometheus.service=sc-prometheus"
-      - "traefik.http.routers.rt-prometheus.tls=true"
-      - "traefik.http.routers.rt-prometheus.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.rt-prometheus.tls.options=default"
-      - "traefik.http.routers.rt-prometheus.entrypoints=websecure"
-      - "traefik.http.routers.rt-prometheus.middlewares=security-headers@file,dashboard-auth"
-      - "traefik.http.services.sc-prometheus.loadbalancer.server.port=9090"
+      - "traefik.http.routers.prometheus.rule=Host(`${PROMETHEUS_SUBDOMAIN}.${DOMAIN}`)"
+      - "traefik.http.routers.prometheus.service=prometheus"
+      - "traefik.http.routers.prometheus.tls=true"
+      - "traefik.http.routers.prometheus.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.prometheus.tls.options=default"
+      - "traefik.http.routers.prometheus.entrypoints=websecure"
+      - "traefik.http.routers.prometheus.middlewares=security-headers@file,dashboard-auth"
+      - "traefik.http.services.prometheus.loadbalancer.server.port=9090"
     expose:
       - 9090
     networks:
