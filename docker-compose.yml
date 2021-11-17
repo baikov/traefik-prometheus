@@ -53,7 +53,7 @@ services:
       - '--web.console.libraries=/usr/share/prometheus/console_libraries'
       - '--web.console.templates=/usr/share/prometheus/consoles'
     labels:
-      - "traefik.enable=true"
+      # - "traefik.enable=true"
       # - "traefik.docker.network=front"
       - "traefik.http.routers.rt-prometheus.rule=Host(`${PROMETHEUS}.${DOMAIN}`)"
       - "traefik.http.routers.rt-prometheus.service=sc-prometheus@file"
@@ -104,7 +104,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - grafana_data:/var/lib/grafana
     labels:
-      - "traefik.enable=true"
+      # - "traefik.enable=true"
       # - "traefik.docker.network=front"
       - "traefik.http.routers.rt-grafana.rule=Host(`${GRAFANA}.${DOMAIN}`)"
       - "traefik.http.routers.rt-grafana.service=sc-grafana@file"
