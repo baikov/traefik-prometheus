@@ -110,12 +110,17 @@ services:
       - grafana_data:/var/lib/grafana
     labels:
       - "traefik.enable=true"
-      # - "traefik.docker.network=front"
-      - "traefik.http.routers.rt-grafana.rule=Host(`${GRAFANA}.${DOMAIN}`)"
-      - "traefik.http.routers.rt-grafana.service=sc-grafana@file"
-      - "traefik.http.routers.rt-grafana.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.rt-grafana.entrypoints=websecure"
-      - "traefik.http.routers.rt-grafana.middlewares=security-headers@file"
+      - "traefik.docker.network=front"
+      - "traefik.http.routers.grafana.rule=Host(`${GRAFANA}.${DOMAIN}`)"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.routers.grafana.tls=true"
+      - "traefik.http.routers.grafana.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.grafana.tls.options=default"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.middlewares=security-headers@file"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    expose:
+      - 3000
     env_file:
       - .env
     networks:
