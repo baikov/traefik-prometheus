@@ -28,11 +28,11 @@ http:
         customFrameOptionsValue: SAMEORIGIN
         referrerPolicy: "same-origin"
 
-#     custom-redirect:  # Redirect from www to non-www and http to https
-#       redirectregex:
-#         regex: "^https?://(www.)?(.*)"
-#         replacement: "https://$${2}"
-#         permanent: true
+    www-to-nonwww:  # Redirect from www to non-www and http to https
+      redirectregex:
+        regex: "^https?://(www.)?(.*)"
+        replacement: "https://$${2}"
+        permanent: true
 
 #     redirect-to-https:  # Redirect 301 to https
 #       redirectscheme:

@@ -29,29 +29,28 @@ services:
       # - "traefik.backend=traefik"
 
       # Rules and middlewares asociation with entrypoints
-      - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.http-catchall.entrypoints=web"
-      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https,security-headers@file"
-      - "traefik.http.routers.https-catchall.rule=hostregexp(`{host:.+}`)"
-      - "traefik.http.routers.https-catchall.entrypoints=websecure"
-      # - "traefik.http.routers.https-catchall.middlewares=security-headers"
-      - "traefik.http.routers.https-catchall.middlewares=custom-redirect,security-headers@file"
+      # - "traefik.http.routers.http-catchall.rule=hostregexp(`{host:.+}`)"
+      # - "traefik.http.routers.http-catchall.entrypoints=web"
+      # - "traefik.http.routers.http-catchall.middlewares=redirect-to-https,security-headers@file"
+      # - "traefik.http.routers.https-catchall.rule=hostregexp(`{host:.+}`)"
+      # - "traefik.http.routers.https-catchall.entrypoints=websecure"
+      # - "traefik.http.routers.https-catchall.middlewares=custom-redirect,security-headers@file"
 
       # Secure Dashboard (http basic auth)
       - "traefik.http.routers.dashboard.rule=Host(`${TRAEFIK_DASHBOARD}.${DOMAIN}`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
-      - "traefik.http.routers.dashboard.middlewares=security-headers@file,dashboard-auth"
+      - "traefik.http.routers.dashboard.middlewares=www-to-nonwww,security-headers@file,dashboard-auth"
       # Dashboard auth
       - "traefik.http.middlewares.dashboard-auth.basicauth.users=${DASHBOARD_LOG_PSW}"
       # Redirect from www to non-www and http to https
-      - "traefik.http.middlewares.custom-redirect.redirectregex.regex=^https?://(www.)?(.*)"
-      - "traefik.http.middlewares.custom-redirect.redirectregex.replacement=https://$${2}"
-      - "traefik.http.middlewares.custom-redirect.redirectregex.permanent=true"
+      # - "traefik.http.middlewares.custom-redirect.redirectregex.regex=^https?://(www.)?(.*)"
+      # - "traefik.http.middlewares.custom-redirect.redirectregex.replacement=https://$${2}"
+      # - "traefik.http.middlewares.custom-redirect.redirectregex.permanent=true"
       # Redirect 301 to https Middleware
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
+      # - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
       # # Security headers middleware
       # - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
       # - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
