@@ -35,12 +35,12 @@ http:
       tls:
         certResolver: letsencrypt
 
-    # rt-grafana:
-    #   entryPoints:
-    #   - websecure
-    #   middlewares:
-    #   - security
-    #   service: sc-grafana
-    #   rule: Host (`grafana.czs.local`)
-    #   tls:
-    #     certResolver: letsencrypt
+    rt-grafana:
+      entryPoints:
+      - websecure
+      # middlewares:
+      # - security
+      service: sc-grafana
+      rule: Host (`gr.scansite.ru`)
+      tls:
+        certResolver: letsencrypt

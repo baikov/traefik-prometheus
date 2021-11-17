@@ -51,6 +51,52 @@ services:
       # - /etc/localtime:/etc/localtime:ro
     networks:
       - front
+      - back
+
+  nodeexporter:
+    image: prom/node-exporter
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - --collector.processes
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    networks:
+      - back
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /sys:/sys:ro
+      - /var/disk:/var/disk:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /var/run:/var/run:ro
+    networks:
+      - back
+
+  grafana:
+    image: grafana/grafana
+    restart: unless-stopped
+    environment:
+      GF_USERS_ALLOW_SIGN_UP: false
+    depends_on:
+      - prometheus
+    volumes:
+      - ./grafana/provisioning.yml:/etc/grafana/provisioning/datasources/all.yml
+      - /etc/localtime:/etc/localtime:ro
+      - grafana_data:/var/lib/grafana
+    networks:
+      - front
+      - back
 
 volumes:
   traefik_data: {}
