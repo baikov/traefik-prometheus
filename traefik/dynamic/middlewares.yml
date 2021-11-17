@@ -17,8 +17,7 @@ http:
         stsPreload: true
         stsSeconds: 31536000  # 315360000
         forceSTSHeader: true
-        # PermissionsPolicy: "camera 'none'; microphone 'none'; payment 'none'; usb 'none'; vr 'none'; vibrate 'self';"
-
+        # PermissionsPolicy: "accelerometer=(), gyroscope=(), magnetometer=(), geolocation=(self), microphone=(), camera=(), fullscreen=*, payment=(), usb=(), vr=(), vibrate=(self)"  # fullscreen=*
         accessControlAllowMethods:
           - GET
           - OPTIONS

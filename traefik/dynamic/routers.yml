@@ -31,7 +31,7 @@ http:
       # middlewares:
       # - authentification
       service: sc-prometheus
-      rule: Host (`scansite.ru`)
+      rule: Host (`prom.scansite.ru`)
       tls:
         certResolver: letsencrypt
 
