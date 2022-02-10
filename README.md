@@ -1,5 +1,5 @@
 # Traefik + Prometheus + Grafana
-- Traefik 2.5 as reverse-proxy
+- Traefik 2.6 as reverse-proxy
 - Prometheus
 - Grafana
 
