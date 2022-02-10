@@ -22,6 +22,8 @@ entryPoints:
 
   metrics:
     address: ":9090"
+  flower:
+    address: :5555
 
 metrics:
   prometheus:
